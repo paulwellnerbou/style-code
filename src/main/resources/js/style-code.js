@@ -16,10 +16,15 @@ var processCodeBlocks = function () {
 
 var updateIframeContents = function(textarea, iframe) {
     iframe.contentWindow.document.body.innerHTML = textarea.value;
+    var height = $(iframe.contentWindow.document.getElementsByTagName('html')[0]).height();
+    height += 2; // border
+    $(iframe).css("height", height + "px");
 };
 
 var convertToEditable = function(codeElement) {
+    var codeHeight = $(codeElement).height() + 20;
     var textarea = document.createElement('textarea');
+    $(textarea).css('height', codeHeight + "px");
     textarea.setAttribute('class', 'form-control');
     textarea.value = unescapeHtml(codeElement.innerHTML);
     var parentNode = codeElement.parentNode;
@@ -30,10 +35,11 @@ var convertToEditable = function(codeElement) {
 
 var createRenderIframe = function(textareaElement) {
     var newPre = document.createElement('pre');
+    newPre.setAttribute('class', 'iframe');
     var iframe = document.createElement('iframe');
     iframe.setAttribute('src', 'iframe.html');
-    iframe.setAttribute('class', 'form-control');
-    iframe.setAttribute('style', 'min-height: 100px; resize: both; overflow: auto;');
+    //iframe.setAttribute('class', 'form-control');
+    iframe.setAttribute('style', 'resize: both; overflow: auto;');
 
     var pre = textareaElement.parentNode;
     var parent = pre.parentNode;

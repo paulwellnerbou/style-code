@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>IFrame Container</title>
+
+    {{#headresources}}
+        {{{.}}}
+    {{/headresources}}
+</head>
+<body>
+<div id="content">
+    <b>Iframe. If you see this, something executing JavaScript went wrong.</b>
+</div>
+{{#bodyresources}}
+    {{{.}}}
+{{/bodyresources}}
+</body>
+</html>
