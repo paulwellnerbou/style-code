@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.3/jquery.min.js"></script>
+
+    <link href='https://fonts.googleapis.com/css?family=Oswald:400,700,300' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Fira+Mono:400,700' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Merriweather:400,400italic,700,700italic' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Voces' rel='stylesheet' type='text/css'>
+
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"
+          integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css"
+          integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r" crossorigin="anonymous">
+
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS"
+            crossorigin="anonymous"></script>
+
+    <!-- add after bootstrap.min.css -->
+    <link rel="stylesheet" href="https://cdn.rawgit.com/afeld/bootstrap-toc/v0.3.0/dist/bootstrap-toc.min.css">
+    <!-- add after bootstrap.min.js -->
+    <script src="https://cdn.rawgit.com/afeld/bootstrap-toc/v0.3.0/dist/bootstrap-toc.min.js"></script>
+
+    <!-- Custom CSS -->
+    <link href="css/simple-sidebar.css" rel="stylesheet">
+    <link href="css/toc.css" rel="stylesheet">
+
+    <style>
+        p {
+            font-family: 'Merriweather', serif;
+        }
+
+        h1, h2, h3, h4, h5 {
+            font-family: 'Oswald', sans-serif;
+        }
+
+        code, pre {
+            font-family: 'Fira Mono', monospace;
+        }
+
+        body {
+            font-size: 16px;
+            line-height: 24px;
+        }
+    </style>
+
+    <script src="js/toc.min.js"></script>
+    <script src="js/test.js"></script>
+</head>
+
+<body>
+<div id="wrapper">
+    <div id="sidebar-wrapper">
+        <nav id="toc"></nav>
+    </div>
+
+    <div id="page-content-wrapper">
+        <div>
+            <h1>Main title</h1>
+            <h2>Section 1</h2>
+            <h3>First example</h3>
+            <p>This is a normal paragraph.</p>
+            <pre><code class="html">&lt;b&gt;This is code which should appear bold&lt;/b&gt;</code></pre>
+        </div>
+    </div>
+</div>
+
+<script>
+    processCodeBlocks();
+    $('#toc').toc();
+</script>
+
+</body>
+</html>

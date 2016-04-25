@@ -1,13 +1,23 @@
+/*
+ * Source taken from: http://projects.jga.me/toc/#toc5
+ * Modifight slightly for typography and to fit it into the
+ * existing sidebar.
+*/
+
 #toc {
     top: 0px;
     left: 0px;
     height: 100%;
-    position: fixed;
+    position: relative;
     background: #333;
     box-shadow: inset -5px 0 5px 0px #000;
-    width: 150px;
+    width: 100%;
     padding-top: 20px;
     color: #fff;
+}
+
+#toc, #toc * {
+    font-family: Voces, sans-serif;
 }
 
 #toc ul {
