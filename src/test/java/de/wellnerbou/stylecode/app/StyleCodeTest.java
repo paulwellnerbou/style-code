@@ -6,11 +6,12 @@ import static org.junit.Assert.*;
 
 public class StyleCodeTest {
 
-    private StyleCode styleCode = new StyleCode();;
-
     @Test
     public void generate() throws Exception {
-        styleCode.generate("src/test/resources/markdown/paulwellnerbou.md", "out", "http://paul.wellnerbou.de");
+        new StyleCodeBuilder("src/test/resources/markdown/paulwellnerbou.md")
+                .useStylesAndScriptsFrom("http://paul.wellnerbou.de")
+                .build()
+                .generate("out/paulwellnerbou/");
     }
 
     @Test

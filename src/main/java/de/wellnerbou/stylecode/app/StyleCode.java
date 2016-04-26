@@ -20,20 +20,26 @@ import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.Reader;
 import java.io.Writer;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 public class StyleCode {
 
-    public void generate(final String markdownResource, final String out, final String urlToGetResourcesFrom) throws IOException {
-        File d = new File(out);
+    private String sourceMarkdownFile;
+    private ResourceGetter resourceGetter;
+
+    public StyleCode(final String sourceMarkdownFile) {
+        this.sourceMarkdownFile = sourceMarkdownFile;
+    }
+
+    public void generate(final String outputDirectory) throws IOException {
+        File d = new File(outputDirectory);
         if(!d.isDirectory()) {
             d.mkdirs();
         }
-        File md = new File(markdownResource);
-        writeHtmlFilesToOutDirectory(d, getHtmlFromMarkdown(new FileInputStream(md)), urlToGetResourcesFrom);
+        File md = new File(sourceMarkdownFile);
+        writeHtmlFilesToOutDirectory(d, getHtmlFromMarkdown(new FileInputStream(md)));
         copyAdditionalResources(d);
     }
 
@@ -45,14 +51,12 @@ public class StyleCode {
         }
     }
 
-    public void writeHtmlFilesToOutDirectory(final File outDirectory, final String contentHtml, final String urlToGetResourcesFrom) throws IOException {
+    public void writeHtmlFilesToOutDirectory(final File outDirectory, final String contentHtml) throws IOException {
         HashMap<String, Object> scopes = new HashMap<>();
         scopes.put("title", "StyleDoc");
         scopes.put("content", contentHtml);
         parseTemplateToOutDirectory(outDirectory, scopes, "/index.html.mustache");
-
-        ResourceGetter resourceGetter = new ResourceGetter();
-        parseTemplateToOutDirectory(outDirectory, resourceGetter.getResourcesFrom(urlToGetResourcesFrom), "/iframe.html.mustache");
+        parseTemplateToOutDirectory(outDirectory, resourceGetter.fetch(), "/iframe.html.mustache");
     }
 
     private void parseTemplateToOutDirectory(File outDirectory, Object scopes, String resourceStr) throws IOException {
@@ -91,5 +95,13 @@ public class StyleCode {
                 }
             }
         }
+    }
+
+    public void setSourceMarkdownFile(String sourceMarkdownFile) {
+        this.sourceMarkdownFile = sourceMarkdownFile;
+    }
+
+    public void setResourceGetter(ResourceGetter resourceGetter) {
+        this.resourceGetter = resourceGetter;
     }
 }

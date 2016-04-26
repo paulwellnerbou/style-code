@@ -22,9 +22,10 @@ var updateIframeContents = function(textarea, iframe) {
 };
 
 var convertToEditable = function(codeElement) {
-    var codeHeight = $(codeElement).height() + 20;
+    var codeHeight = $(codeElement).height() + 25;
     var textarea = document.createElement('textarea');
     $(textarea).css('height', codeHeight + "px");
+    $(textarea).css('min-height', "50px");
     textarea.setAttribute('class', 'form-control');
     textarea.value = unescapeHtml(codeElement.innerHTML);
     var parentNode = codeElement.parentNode;
