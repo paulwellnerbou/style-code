@@ -1,4 +1,4 @@
-package de.wellnerbou.stylecode.app;
+package de.wellnerbou.stylecode;
 
 import com.github.mustachejava.DefaultMustacheFactory;
 import com.github.mustachejava.Mustache;

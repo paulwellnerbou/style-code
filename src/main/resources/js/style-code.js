@@ -38,6 +38,7 @@ var createRenderIframe = function(textareaElement) {
     var newPre = document.createElement('pre');
     newPre.setAttribute('class', 'iframe');
     var iframe = document.createElement('iframe');
+    iframe.setAttribute('class', 'demo');
     iframe.setAttribute('src', 'iframe.html');
     //iframe.setAttribute('class', 'form-control');
     iframe.setAttribute('style', 'resize: both; overflow: auto;');

@@ -1,10 +1,12 @@
-package de.wellnerbou.stylecode.app;
+package de.wellnerbou.stylecode;
+
+import java.util.Arrays;
 
 public class StyleCodeBuilder {
 
     private String urlToFetchResourcesFrom;
     private boolean includeInlineScripts = false;
-    private String[] excludePatterns;
+    private Iterable<String> excludePatterns;
     private String fromMarkdownFile;
 
     public StyleCodeBuilder(final String fromMarkdownFile) {
@@ -21,8 +23,13 @@ public class StyleCodeBuilder {
         return this;
     }
 
-    public StyleCodeBuilder excludeResourcesMatching(final String... excludePatterns) {
+    public StyleCodeBuilder excludeResourcesMatching(final Iterable<String> excludePatterns) {
         this.excludePatterns = excludePatterns;
+        return this;
+    }
+
+    public StyleCodeBuilder excludeResourcesMatching(final String... excludePatterns) {
+        this.excludePatterns = Arrays.asList(excludePatterns);
         return this;
     }
 

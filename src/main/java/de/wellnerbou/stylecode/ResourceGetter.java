@@ -1,4 +1,4 @@
-package de.wellnerbou.stylecode.app;
+package de.wellnerbou.stylecode;
 
 import com.google.common.collect.Lists;
 import org.jsoup.Jsoup;
@@ -69,7 +69,7 @@ public class ResourceGetter {
         return url.getProtocol() + "://" + url.getAuthority();
     }
 
-    public void setExcludePatterns(String[] excludePatterns) {
+    public void setExcludePatterns(Iterable<String> excludePatterns) {
         this.excludePatterns = excludePatterns;
     }
 

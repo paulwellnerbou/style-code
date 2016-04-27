@@ -1,8 +1,7 @@
 package de.wellnerbou.stylecode.app;
 
+import de.wellnerbou.stylecode.StyleCodeBuilder;
 import org.junit.Test;
-
-import static org.junit.Assert.*;
 
 public class StyleCodeTest {
 
@@ -15,22 +14,10 @@ public class StyleCodeTest {
     }
 
     @Test
-    public void getHtmlFromMarkdown() throws Exception {
-
-    }
-
-    @Test
-    public void writeHtmlToOutDirectory() throws Exception {
-
-    }
-
-    @Test
-    public void getTemplateReader() throws Exception {
-
-    }
-
-    @Test
-    public void copyAdditionalResources() throws Exception {
-
+    public void generateDfl() throws Exception {
+        new StyleCodeBuilder("custom-stuff/dfl.md")
+                .useStylesAndScriptsFrom("http://w8-wsc09/")
+                .build()
+                .generate("out/dfl/");
     }
 }
