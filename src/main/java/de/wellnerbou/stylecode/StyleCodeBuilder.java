@@ -8,8 +8,9 @@ public class StyleCodeBuilder {
     private boolean includeInlineScripts = false;
     private Iterable<String> excludePatterns;
     private String fromMarkdownFile;
+	private Iterable<String> additionalResources;
 
-    public StyleCodeBuilder(final String fromMarkdownFile) {
+	public StyleCodeBuilder(final String fromMarkdownFile) {
         this.fromMarkdownFile = fromMarkdownFile;
     }
 
@@ -23,7 +24,10 @@ public class StyleCodeBuilder {
         return this;
     }
 
-	public StyleCodeBuilder
+	public StyleCodeBuilder withAdditionalResources(final Iterable<String> additionalResources) {
+		this.additionalResources = additionalResources;
+		return this;
+	}
 
     public StyleCodeBuilder excludeResourcesMatching(final Iterable<String> excludePatterns) {
         this.excludePatterns = excludePatterns;
