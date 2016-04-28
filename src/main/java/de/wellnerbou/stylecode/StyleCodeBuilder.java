@@ -23,6 +23,8 @@ public class StyleCodeBuilder {
         return this;
     }
 
+	public StyleCodeBuilder
+
     public StyleCodeBuilder excludeResourcesMatching(final Iterable<String> excludePatterns) {
         this.excludePatterns = excludePatterns;
         return this;
