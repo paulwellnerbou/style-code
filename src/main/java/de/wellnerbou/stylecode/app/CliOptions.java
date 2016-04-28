@@ -2,6 +2,7 @@ package de.wellnerbou.stylecode.app;
 
 import com.lexicalscope.jewel.cli.Option;
 import com.lexicalscope.jewel.cli.Unparsed;
+import de.wellnerbou.stylecode.DefaultTemplateConstants;
 
 import java.util.List;
 
@@ -21,6 +22,12 @@ public interface CliOptions {
 
     @Option(defaultValue = "out", longName = "out", description = "Directory the output should be written to.")
     String getOutputDirectory();
+
+    @Option(defaultValue = DefaultTemplateConstants.DEFAULT_IFRAME_HTML_TEMPLATE, longName = "iframe-template", description = "Mustache template file to use for embedded iframes with HTML demos. If you still want resources (<script...>, <style>, <link rel=stylesheet...>) to be included, use {{headerresources}} for resources included in HTML header and {{bodyresources}} for resources included in the HTML body.")
+    String useIframeTemplate();
+
+    @Option(defaultValue = DefaultTemplateConstants.DEFAULT_INDEX_HTML_TEMPLATE, longName = "index-template", description = "Mustache template file to use for the resulting index.html.")
+    String useIndexTemplate();
 
     @Unparsed(description = "Markdown file containing the documentation and example HTML.")
     String markdownFile();

@@ -25,6 +25,8 @@ public class StyleCodeApp {
                 .useStylesAndScriptsFrom(options.getUrlToFetchResourcesFrom())
                 .excludeResourcesMatching(options.excludePatterns())
                 .includeInlineScripts(options.includeInlineScripts())
+                .withIframeHtmlTemplate(options.useIframeTemplate())
+                .withIndexHtmlTemplate(options.useIndexTemplate())
                 .build().generate(options.getOutputDirectory());
     }
 }

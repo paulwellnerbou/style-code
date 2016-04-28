@@ -17,6 +17,7 @@ public class ResourceGetter {
 	private boolean includeInlineScripts = false;
 	private Iterable<String> excludePatterns;
 	private Iterable<String> includeAdditionalResources;
+	private Iterable<String> additionalResources;
 
 	public ResourceGetter(final String urlStr) {
 		this.urlStr = urlStr;
@@ -120,6 +121,10 @@ public class ResourceGetter {
 
 	public void setIncludeInlineScripts(boolean includeInlineScripts) {
 		this.includeInlineScripts = includeInlineScripts;
+	}
+
+	public void setAdditionalResources(Iterable<String> additionalResources) {
+		this.additionalResources = additionalResources;
 	}
 
 	public class Resources {

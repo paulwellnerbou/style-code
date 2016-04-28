@@ -20,12 +20,15 @@ import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.Reader;
 import java.io.Writer;
+import java.net.URL;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 public class StyleCode {
 
+    private String indexHtmlTemplate;
+    private String iframeHtmlTemplate;
     private String sourceMarkdownFile;
     private ResourceGetter resourceGetter;
 
@@ -35,7 +38,7 @@ public class StyleCode {
 
     public void generate(final String outputDirectory) throws IOException {
         File d = new File(outputDirectory);
-        if(!d.isDirectory()) {
+        if (!d.isDirectory()) {
             d.mkdirs();
         }
         File md = new File(sourceMarkdownFile);
@@ -55,12 +58,12 @@ public class StyleCode {
         HashMap<String, Object> scopes = new HashMap<>();
         scopes.put("title", "StyleDoc");
         scopes.put("content", contentHtml);
-        parseTemplateToOutDirectory(outDirectory, scopes, "/index.html.mustache");
-        parseTemplateToOutDirectory(outDirectory, resourceGetter.fetch(), "/iframe.html.mustache");
+        parseTemplateToOutDirectory(outDirectory, scopes, indexHtmlTemplate);
+        parseTemplateToOutDirectory(outDirectory, resourceGetter.fetch(), iframeHtmlTemplate);
     }
 
     private void parseTemplateToOutDirectory(File outDirectory, Object scopes, String resourceStr) throws IOException {
-        String targetFilename = resourceStr.replace(".mustache", "");
+        String targetFilename = guessTargetFilename(resourceStr);
         try (final Writer writer = new FileWriter(outDirectory + targetFilename); final Reader reader = getTemplateReader(resourceStr)) {
             MustacheFactory mf = new DefaultMustacheFactory();
             Mustache mustache = mf.compile(reader, resourceStr);
@@ -69,23 +72,41 @@ public class StyleCode {
         }
     }
 
-    public Reader getTemplateReader(final String resourceStr) throws IOException {
-        InputStream res = this.getClass().getResourceAsStream(resourceStr);
-        if(res == null) {
-            throw new IOException("Resource " +  resourceStr + " not found.");
+    private String guessTargetFilename(String resourceStr) {
+        String targetFilename = resourceStr.replace(".mustache", "").replace(".hbs", "");
+        if (!targetFilename.endsWith(".html") && !targetFilename.endsWith(".htm")) {
+            targetFilename += ".html";
+            targetFilename.replace("..", ".");
         }
-        return new InputStreamReader(res);
+        return targetFilename;
+    }
+
+    public Reader getTemplateReader(final String resourceStr) throws IOException {
+        InputStream inputStream = null;
+        if (resourceStr.equals(DefaultTemplateConstants.DEFAULT_INDEX_HTML_TEMPLATE) || resourceStr.equals(DefaultTemplateConstants.DEFAULT_IFRAME_HTML_TEMPLATE)) {
+            inputStream = this.getClass().getResourceAsStream(resourceStr);
+            if (inputStream == null) {
+                throw new IOException("Classpath resource " + resourceStr + " not found: ");
+            }
+        } else {
+            if(new File(resourceStr).exists()) {
+                inputStream = new FileInputStream(resourceStr);
+            } else {
+                inputStream = new URL(resourceStr).openStream();
+            }
+        }
+        return new InputStreamReader(inputStream);
     }
 
     public void copyAdditionalResources(final File outDirectory) throws IOException {
-		final Map<String, ? extends List<String>> resources = ImmutableMap.of(
-				"css", Lists.newArrayList("simple-sidebar.css", "toc.css"),
-				"js", Lists.newArrayList("style-code.js", "toc.min.js")
-		);
+        final Map<String, ? extends List<String>> resources = ImmutableMap.of(
+                "css", Lists.newArrayList("simple-sidebar.css", "toc.css"),
+                "js", Lists.newArrayList("style-code.js", "toc.min.js")
+        );
 
         for (Map.Entry<String, ? extends List<String>> entry : resources.entrySet()) {
             File d = new File(outDirectory.getAbsolutePath() + "/" + entry.getKey());
-            if(!d.exists()) {
+            if (!d.exists()) {
                 d.mkdir();
             }
             for (String filename : entry.getValue()) {
@@ -97,11 +118,15 @@ public class StyleCode {
         }
     }
 
-    public void setSourceMarkdownFile(String sourceMarkdownFile) {
-        this.sourceMarkdownFile = sourceMarkdownFile;
-    }
-
     public void setResourceGetter(ResourceGetter resourceGetter) {
         this.resourceGetter = resourceGetter;
+    }
+
+    public void setIframeHtmlTemplate(String iframeHtmlTemplate) {
+        this.iframeHtmlTemplate = iframeHtmlTemplate;
+    }
+
+    public void setIndexHtmlTemplate(String indexHtmlTemplate) {
+        this.indexHtmlTemplate = indexHtmlTemplate;
     }
 }
