@@ -59,7 +59,7 @@ public class StyleCode {
         scopes.put("title", "StyleDoc");
         scopes.put("content", contentHtml);
         parseTemplateToOutDirectory(outDirectory, scopes, indexHtmlTemplate);
-        parseTemplateToOutDirectory(outDirectory, resourceGetter.fetch(), iframeHtmlTemplate);
+        // parseTemplateToOutDirectory(outDirectory, resourceGetter.fetchFrom(), iframeHtmlTemplate);
     }
 
     private void parseTemplateToOutDirectory(File outDirectory, Object scopes, String resourceStr) throws IOException {

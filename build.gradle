@@ -1,5 +1,20 @@
 apply plugin: 'java'
 apply plugin: 'application'
+apply plugin: 'maven'
+
+group = 'de.wellnerbou'
+version = '0.1-SNAPSHOT'
+
+mainClassName = "de.wellnerbou.stylecode.app.StyleCodeApp"
+
+sourceCompatibility = 1.7
+targetCompatibility = 1.7
+
+run {
+    if ( project.hasProperty('args') ) {
+        args project.args.split('\\s+')
+    }
+}
 
 repositories {
     jcenter()
@@ -15,6 +30,15 @@ dependencies {
     // Java 7:
     compile 'com.github.spullara.mustache.java:compiler:0.8.1'
     compile 'org.jsoup:jsoup:1.7.2'
+    // Java 7:
     testCompile 'org.assertj:assertj-core:2.4.1'
     testCompile 'junit:junit:4.+'
+}
+
+uploadArchives {
+    repositories {
+        mavenDeployer {
+            repository(url: uri('../repo'))
+        }
+    }
 }
