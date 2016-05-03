@@ -26,7 +26,6 @@ var updateIframeContents = function(textarea, iframe) {
 function resizeTextarea(textarea) {
     var codeHeight = textarea.getAttribute('data-original-height');
     $(textarea).css('height', codeHeight + "px");
-    console.debug("textarea.height: " + codeHeight);
 }
 
 var convertToEditable = function(codeElement) {
@@ -61,7 +60,6 @@ var addToggleForCodeView = function(preElement) {
 };
 
 var toggleCode = function(element, textarea) {
-    console.debug($(element.nextElementSibling));
     $(element.nextElementSibling).toggle(200, resizeTextarea(textarea));
     $(element.parentNode.querySelector('.info')).toggle(200);
     var icon = element.querySelector('span.glyphicon');

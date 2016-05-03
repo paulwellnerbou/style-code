@@ -59,7 +59,7 @@ public class StyleCode {
         scopes.put("title", "StyleDoc");
         scopes.put("content", contentHtml);
         parseTemplateToOutDirectory(outDirectory, scopes, indexHtmlTemplate);
-        // parseTemplateToOutDirectory(outDirectory, resourceGetter.fetchFrom(), iframeHtmlTemplate);
+        parseTemplateToOutDirectory(outDirectory, resourceGetter.fetchAllResources(), iframeHtmlTemplate);
     }
 
     private void parseTemplateToOutDirectory(File outDirectory, Object scopes, String resourceStr) throws IOException {
@@ -82,7 +82,7 @@ public class StyleCode {
     }
 
     public Reader getTemplateReader(final String resourceStr) throws IOException {
-        InputStream inputStream = null;
+        InputStream inputStream;
         if (resourceStr.equals(DefaultTemplateConstants.DEFAULT_INDEX_HTML_TEMPLATE) || resourceStr.equals(DefaultTemplateConstants.DEFAULT_IFRAME_HTML_TEMPLATE)) {
             inputStream = this.getClass().getResourceAsStream(resourceStr);
             if (inputStream == null) {

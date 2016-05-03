@@ -54,12 +54,14 @@ public class StyleCodeBuilder {
     }
 
     public StyleCode build() throws MalformedURLException {
-        ResourceGetter resourceGetter = new ResourceGetter();
+        final ResourceGetter resourceGetter = new ResourceGetter();
         resourceGetter.setExcludePatterns(excludePatterns);
         resourceGetter.setIncludeInlineScripts(includeInlineScripts);
         SourceUrlProcessor sourceUrlProcessor = null;
         if (urlToFetchResourcesFrom != null) {
-            sourceUrlProcessor = new SourceUrlProcessor(new URL(urlToFetchResourcesFrom));
+            final URL url = new URL(urlToFetchResourcesFrom);
+            resourceGetter.setUrl(url);
+            sourceUrlProcessor = new SourceUrlProcessor(url);
             resourceGetter.setSourceUrlProcessor(sourceUrlProcessor);
         }
         if (additionalResources != null) {
@@ -72,7 +74,7 @@ public class StyleCodeBuilder {
             resourceGetter.setAdditionalResourcesPopulator(additionalResourcesPopulator);
         }
 
-        StyleCode styleCode = new StyleCode(fromMarkdownFile);
+        final StyleCode styleCode = new StyleCode(fromMarkdownFile);
         styleCode.setResourceGetter(resourceGetter);
         styleCode.setIframeHtmlTemplate(iframeHtmlTemplate);
         styleCode.setIndexHtmlTemplate(indexHtmlTemplate);

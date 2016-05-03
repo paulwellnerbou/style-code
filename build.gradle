@@ -8,7 +8,7 @@ apply plugin: 'maven'
 apply plugin: 'maven-publish'
 
 group = 'de.wellnerbou'
-version = '0.1'
+version = '0.2'
 
 mainClassName = "de.wellnerbou.stylecode.app.StyleCodeApp"
 

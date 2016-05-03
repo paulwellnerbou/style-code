@@ -1,6 +1,5 @@
 package de.wellnerbou.stylecode;
 
-import com.google.common.base.Optional;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -16,12 +15,16 @@ public class ResourceGetter {
 
     private SourceUrlProcessor sourceUrlProcessor;
     private AdditionalResourcesPopulator additionalResourcesPopulator;
+    private URL url;
 
-    public Resources fetchFrom(URL url) throws IOException {
-        Document doc = Jsoup.connect(url.toString()).userAgent("Jsoup.connect by style-code/v0.1 (+https://github.com/paulwellnerbou/style-code)").timeout(0).get();
+    public Resources fetchAllResources() throws IOException {
         Resources resources = new Resources();
-        populateList(doc, "head", resources.headresources);
-        populateList(doc, "body", resources.bodyresources);
+        if(this.url != null) {
+            Document doc = Jsoup.connect(url.toString()).userAgent("Jsoup.connect by style-code/v0.2 (+https://github.com/paulwellnerbou/style-code)").timeout(0).get();
+            populateList(doc, "head", resources.headresources);
+            populateList(doc, "body", resources.bodyresources);
+        }
+        enrichWithadditionalResources(resources);
         return resources;
     }
 
@@ -93,4 +96,7 @@ public class ResourceGetter {
         this.sourceUrlProcessor = sourceUrlProcessor;
     }
 
+    public void setUrl(URL url) {
+        this.url = url;
+    }
 }
