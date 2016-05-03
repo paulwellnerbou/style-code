@@ -12,12 +12,4 @@ public class StyleCodeTest {
                 .build()
                 .generate("out/paulwellnerbou/");
     }
-
-    @Test
-    public void generateDfl() throws Exception {
-        new StyleCodeBuilder("custom-stuff/dfl.md")
-                .useStylesAndScriptsFrom("http://w8-wsc09/")
-                .build()
-                .generate("out/dfl/");
-    }
 }

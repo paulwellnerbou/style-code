@@ -11,7 +11,7 @@ public class SourceUrlProcessor {
     }
 
     public String processSrcUrl(final String src) {
-        if (!src.startsWith("http://") && !src.startsWith("//")) {
+        if (!src.startsWith("http://") && !src.startsWith("https://") && !src.startsWith("//")) {
             if (src.startsWith("/")) {
                 return getBaseUrl() + src;
             } else {

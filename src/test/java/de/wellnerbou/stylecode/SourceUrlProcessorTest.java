@@ -9,6 +9,13 @@ import java.net.URL;
 public class SourceUrlProcessorTest {
 
     @Test
+    public void processSrcUrl_absoluteUrlWithHttps() throws MalformedURLException {
+        String src = "https://www.example.com/file.css";
+        String res = new SourceUrlProcessor(new URL("https://www.example.com/some/where.html")).processSrcUrl(src);
+        Assertions.assertThat(res).isEqualTo(src);
+    }
+
+    @Test
     public void processSrcUrl_absoluteUrlWithProtocol() throws MalformedURLException {
         String src = "http://www.example.com/file.css";
         String res = new SourceUrlProcessor(new URL("http://www.example.com/some/where.html")).processSrcUrl(src);
@@ -76,6 +83,12 @@ public class SourceUrlProcessorTest {
     public void getBaseUrl_withPathNoPort() throws MalformedURLException {
         String res = new SourceUrlProcessor(new URL("http://www.example.com/path/to/somewhere.extension")).getBaseUrl();
         Assertions.assertThat(res).isEqualTo("http://www.example.com");
+    }
+
+    @Test
+    public void getBaseUrl_withHttpsNoPort() throws MalformedURLException {
+        String res = new SourceUrlProcessor(new URL("https://www.example.com/path/to/somewhere.extension")).getBaseUrl();
+        Assertions.assertThat(res).isEqualTo("https://www.example.com");
     }
 
     @Test
