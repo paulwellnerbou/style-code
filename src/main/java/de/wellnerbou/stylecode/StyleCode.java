@@ -56,7 +56,7 @@ public class StyleCode {
 
     public void writeHtmlFilesToOutDirectory(final File outDirectory, final String contentHtml) throws IOException {
         HashMap<String, Object> scopes = new HashMap<>();
-        scopes.put("title", "StyleDoc");
+        scopes.put("title", "StyleCode");
         scopes.put("content", contentHtml);
         parseTemplateToOutDirectory(outDirectory, scopes, indexHtmlTemplate);
         parseTemplateToOutDirectory(outDirectory, resourceGetter.fetchAllResources(), iframeHtmlTemplate);
