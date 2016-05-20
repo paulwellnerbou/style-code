@@ -1,15 +1,15 @@
-package de.wellnerbou.stylecode.app;
+package de.wellnerbou.stylecode;
 
-import de.wellnerbou.stylecode.StyleCodeBuilder;
 import org.junit.Test;
 
-public class StyleCodeTest {
+public class StyleCodeBuilderTest {
 
     @Test
-    public void generate() throws Exception {
+    public void buildWithoutException() throws Exception {
         new StyleCodeBuilder("src/test/resources/markdown/paulwellnerbou.md")
                 .useStylesAndScriptsFrom("http://paul.wellnerbou.de")
                 .build()
                 .generate("out/paulwellnerbou/");
     }
+
 }

@@ -62,7 +62,7 @@ public class StyleCode {
         parseTemplateToOutDirectory(outDirectory, resourceGetter.fetchAllResources(), iframeHtmlTemplate);
     }
 
-    private void parseTemplateToOutDirectory(File outDirectory, Object scopes, String resourceStr) throws IOException {
+    void parseTemplateToOutDirectory(File outDirectory, Object scopes, String resourceStr) throws IOException {
         String targetFilename = guessTargetFilename(resourceStr);
         try (final Writer writer = new FileWriter(outDirectory + targetFilename); final Reader reader = getTemplateReader(resourceStr)) {
             MustacheFactory mf = new DefaultMustacheFactory();
@@ -72,8 +72,11 @@ public class StyleCode {
         }
     }
 
-    private String guessTargetFilename(String resourceStr) {
+    String guessTargetFilename(String resourceStr) {
         String targetFilename = resourceStr.replace(".mustache", "").replace(".hbs", "");
+        if(targetFilename.contains("/")) {
+            targetFilename = targetFilename.substring(targetFilename.lastIndexOf("/") + 1);
+        }
         if (!targetFilename.endsWith(".html") && !targetFilename.endsWith(".htm")) {
             targetFilename += ".html";
             targetFilename.replace("..", ".");
