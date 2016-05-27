@@ -58,13 +58,12 @@ public class StyleCode {
         HashMap<String, Object> scopes = new HashMap<>();
         scopes.put("title", "StyleCode");
         scopes.put("content", contentHtml);
-        parseTemplateToOutDirectory(outDirectory, scopes, indexHtmlTemplate);
-        parseTemplateToOutDirectory(outDirectory, resourceGetter.fetchAllResources(), iframeHtmlTemplate);
+        parseTemplateToOutDirectory(outDirectory, scopes, indexHtmlTemplate, DefaultTemplateConstants.INDEX_HTML_FILENAME);
+        parseTemplateToOutDirectory(outDirectory, resourceGetter.fetchAllResources(), iframeHtmlTemplate, DefaultTemplateConstants.IFRAME_HTML_FILENAME);
     }
 
-    void parseTemplateToOutDirectory(File outDirectory, Object scopes, String resourceStr) throws IOException {
-        String targetFilename = guessTargetFilename(resourceStr);
-        try (final Writer writer = new FileWriter(outDirectory + targetFilename); final Reader reader = getTemplateReader(resourceStr)) {
+    void parseTemplateToOutDirectory(File outDirectory, Object scopes, String resourceStr, String targetFilename) throws IOException {
+        try (final Writer writer = new FileWriter(outDirectory + "/" + targetFilename); final Reader reader = getTemplateReader(resourceStr)) {
             MustacheFactory mf = new DefaultMustacheFactory();
             Mustache mustache = mf.compile(reader, resourceStr);
             mustache.execute(writer, scopes);
