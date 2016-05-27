@@ -1,19 +1,29 @@
 # style-code
-A java based alternative to tools like StyleDocco, documentcss, etc, easy to run, without the need to have npm, Ruby and Ruby Dev Kit, and so on.
+A java based alternative to tools like [StyleDocco](https://jacobrask.github.io/styledocco/),
+[documentCSS](http://documentcss.com/), [KSS Stylesheets](http://warpspire.com/kss/styleguides/) or [Devbridge's Styleguide](http://livingstyleguide.devbridge.com/), but without
+the (mostly node.js, npm and Ruby or even Ruby Dev Kit related) dependencies those tools bring with it. In addition, style-code does not focus on CSS code (or SCSS/SASS/Less) but markdown.
+
+This makes this tool suitable for a highly automated and platform independent environment
+(means: runs even on windows, if you really want to, without any installation issues, just a JVM is required) and usable as
+well for legacy project with an already existing CSS hell: the documentation is not written into the productive CSS files, but
+into a completely separate markdown file.
+
+Another use case might be tutorials or documentation with examples for HTML, CSS and JavaScript related technologies.
 
 ## Usage
 
 ### Gradle project
 
-Of course, you can use this application via command line. The recommended way of usage is by setting up a gradle project using the [StyleCode Gradle Plugin](https://github.com/paulwellnerbou/style-code-gradle-plugin), though.
-See (https://github.com/paulwellnerbou/style-code-demo-project)[this demo project] as an implementation reference.
+Of course, you can use this application via command line. The recommended way of usage is by setting up a gradle project using
+the [StyleCode Gradle Plugin](https://github.com/paulwellnerbou/style-code-gradle-plugin), though.
+See [this demo project](https://github.com/paulwellnerbou/style-code-demo-project) as an implementation reference.
 
 ### Command line
 
 You can get the latest distribution release [Github's releases page](https://github.com/paulwellnerbou/style-code/releases).
 
 ```
-wget https://github.com/paulwellnerbou/stylecode/releases/download/v0.3/stylecode-0.3.zip
+wget https://github.com/paulwellnerbou/style-code/releases/download/v0.3/stylecode-0.3.zip
 unzip stylecode*.zip
 ./stylecode-*/bin/stylecode
 ```
