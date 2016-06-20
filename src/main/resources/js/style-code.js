@@ -44,7 +44,8 @@ var convertToEditable = function(codeElement) {
 };
 
 var addToggleForCodeView = function(preElement) {
-    var label = document.createElement('div');
+    var div = document.createElement('div');
+    var label = document.createElement('span');
     label.setAttribute("class", "label label-default pointer");
     label.innerHTML = "Code&nbsp;";
     var icon = document.createElement('span');
@@ -54,13 +55,14 @@ var addToggleForCodeView = function(preElement) {
     info.setAttribute("class", "right light info");
     info.setAttribute("style", "display:none;");
     info.innerHTML = "Live editing supported, while you type, the rendering result below will update automatically."
-    $(preElement).prepend(label);
-    $(preElement).prepend(info);
+    $(div).prepend(label);
+    $(div).prepend(info);
+    $(preElement).prepend(div);
     return label;
 };
 
 var toggleCode = function(element, textarea) {
-    $(element.nextElementSibling).toggle(200, resizeTextarea(textarea));
+    $(element.parentNode.nextElementSibling).toggle(200, resizeTextarea(textarea));
     $(element.parentNode.querySelector('.info')).toggle(200);
     var icon = element.querySelector('span.glyphicon');
     $(icon).toggleClass("glyphicon-menu-right");
