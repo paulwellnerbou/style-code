@@ -44,7 +44,7 @@ var convertToEditable = function(codeElement) {
 };
 
 var addToggleForCodeView = function(preElement) {
-    var label = document.createElement('span');
+    var label = document.createElement('div');
     label.setAttribute("class", "label label-default pointer");
     label.innerHTML = "Code&nbsp;";
     var icon = document.createElement('span');
