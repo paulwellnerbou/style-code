@@ -56,15 +56,14 @@ public class StyleCode {
 
     public void writeHtmlFilesToOutDirectory(final File outDirectory, final String contentHtml) throws IOException {
         HashMap<String, Object> scopes = new HashMap<>();
-        scopes.put("title", "StyleDoc");
+        scopes.put("title", "StyleCode");
         scopes.put("content", contentHtml);
-        parseTemplateToOutDirectory(outDirectory, scopes, indexHtmlTemplate);
-        parseTemplateToOutDirectory(outDirectory, resourceGetter.fetch(), iframeHtmlTemplate);
+        parseTemplateToOutDirectory(outDirectory, scopes, indexHtmlTemplate, DefaultTemplateConstants.INDEX_HTML_FILENAME);
+        parseTemplateToOutDirectory(outDirectory, resourceGetter.fetchAllResources(), iframeHtmlTemplate, DefaultTemplateConstants.IFRAME_HTML_FILENAME);
     }
 
-    private void parseTemplateToOutDirectory(File outDirectory, Object scopes, String resourceStr) throws IOException {
-        String targetFilename = guessTargetFilename(resourceStr);
-        try (final Writer writer = new FileWriter(outDirectory + targetFilename); final Reader reader = getTemplateReader(resourceStr)) {
+    void parseTemplateToOutDirectory(File outDirectory, Object scopes, String resourceStr, String targetFilename) throws IOException {
+        try (final Writer writer = new FileWriter(outDirectory + "/" + targetFilename); final Reader reader = getTemplateReader(resourceStr)) {
             MustacheFactory mf = new DefaultMustacheFactory();
             Mustache mustache = mf.compile(reader, resourceStr);
             mustache.execute(writer, scopes);
@@ -72,8 +71,11 @@ public class StyleCode {
         }
     }
 
-    private String guessTargetFilename(String resourceStr) {
+    String guessTargetFilename(String resourceStr) {
         String targetFilename = resourceStr.replace(".mustache", "").replace(".hbs", "");
+        if(targetFilename.contains("/")) {
+            targetFilename = targetFilename.substring(targetFilename.lastIndexOf("/") + 1);
+        }
         if (!targetFilename.endsWith(".html") && !targetFilename.endsWith(".htm")) {
             targetFilename += ".html";
             targetFilename.replace("..", ".");
@@ -82,7 +84,7 @@ public class StyleCode {
     }
 
     public Reader getTemplateReader(final String resourceStr) throws IOException {
-        InputStream inputStream = null;
+        InputStream inputStream;
         if (resourceStr.equals(DefaultTemplateConstants.DEFAULT_INDEX_HTML_TEMPLATE) || resourceStr.equals(DefaultTemplateConstants.DEFAULT_IFRAME_HTML_TEMPLATE)) {
             inputStream = this.getClass().getResourceAsStream(resourceStr);
             if (inputStream == null) {

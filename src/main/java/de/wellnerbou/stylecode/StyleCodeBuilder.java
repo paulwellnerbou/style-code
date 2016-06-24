@@ -1,5 +1,7 @@
 package de.wellnerbou.stylecode;
 
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.Arrays;
 
 public class StyleCodeBuilder {
@@ -8,7 +10,7 @@ public class StyleCodeBuilder {
     private boolean includeInlineScripts = false;
     private Iterable<String> excludePatterns;
     private String fromMarkdownFile;
-	private Iterable<String> additionalResources;
+    private Iterable<String> additionalResources;
     private String indexHtmlTemplate = DefaultTemplateConstants.DEFAULT_INDEX_HTML_TEMPLATE;
     private String iframeHtmlTemplate = DefaultTemplateConstants.DEFAULT_IFRAME_HTML_TEMPLATE;
 
@@ -26,10 +28,10 @@ public class StyleCodeBuilder {
         return this;
     }
 
-	public StyleCodeBuilder withAdditionalResources(final Iterable<String> additionalResources) {
-		this.additionalResources = additionalResources;
-		return this;
-	}
+    public StyleCodeBuilder withAdditionalResources(final Iterable<String> additionalResources) {
+        this.additionalResources = additionalResources;
+        return this;
+    }
 
     public StyleCodeBuilder excludeResourcesMatching(final Iterable<String> excludePatterns) {
         this.excludePatterns = excludePatterns;
@@ -51,13 +53,28 @@ public class StyleCodeBuilder {
         return this;
     }
 
-    public StyleCode build() {
-        StyleCode styleCode = new StyleCode(fromMarkdownFile);
-
-        ResourceGetter resourceGetter = new ResourceGetter(urlToFetchResourcesFrom);
+    public StyleCode build() throws MalformedURLException {
+        final ResourceGetter resourceGetter = new ResourceGetter();
         resourceGetter.setExcludePatterns(excludePatterns);
         resourceGetter.setIncludeInlineScripts(includeInlineScripts);
-        resourceGetter.setAdditionalResources(additionalResources);
+        SourceUrlProcessor sourceUrlProcessor = null;
+        if (urlToFetchResourcesFrom != null) {
+            final URL url = new URL(urlToFetchResourcesFrom);
+            resourceGetter.setUrl(url);
+            sourceUrlProcessor = new SourceUrlProcessor(url);
+            resourceGetter.setSourceUrlProcessor(sourceUrlProcessor);
+        }
+        if (additionalResources != null) {
+            AdditionalResourcesPopulator additionalResourcesPopulator;
+            if (sourceUrlProcessor != null) {
+                additionalResourcesPopulator = new AdditionalResourcesPopulator(sourceUrlProcessor);
+            } else {
+                additionalResourcesPopulator = new AdditionalResourcesPopulator();
+            }
+            resourceGetter.setAdditionalResourcesPopulator(additionalResourcesPopulator);
+        }
+
+        final StyleCode styleCode = new StyleCode(fromMarkdownFile);
         styleCode.setResourceGetter(resourceGetter);
         styleCode.setIframeHtmlTemplate(iframeHtmlTemplate);
         styleCode.setIndexHtmlTemplate(indexHtmlTemplate);
